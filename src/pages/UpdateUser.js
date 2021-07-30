@@ -49,7 +49,7 @@ export default function UpdateUser() {
   const [facebook, setFacebook] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
-  const PF = "http://localhost:5000/images/";
+  const PF = "https://blog-jeet.herokuapp.com/images/";
   const [file, setFile] = useState(null);
 
   const [open, setOpen] = useState(false);

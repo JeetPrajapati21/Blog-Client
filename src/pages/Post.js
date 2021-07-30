@@ -23,7 +23,7 @@ export default function Post() {
   const location = useLocation();
   const [post, setPost] = useState({});
   const path = location.pathname.split("/")[2];
-  const PF = "http://localhost:5000/images/";
+  const PF = "https://blog-jeet.herokuapp.com/images/";
 
   const [sidebar, setSideBar] = useState({
     title: "About",

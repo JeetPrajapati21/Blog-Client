@@ -83,7 +83,7 @@ export default function UpdatePost() {
   const [file, setFile] = useState(null);
   const theme = useTheme();
   const [categoryName, setCategoryName] = React.useState([]);
-  const PF = "http://localhost:5000/images/";
+  const PF = "https://blog-jeet.herokuapp.com/images/";
 
   const [open, setOpen] = useState(false);
 

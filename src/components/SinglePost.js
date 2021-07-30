@@ -30,7 +30,7 @@ const dateFormat = (inputDate) => {
 export default function SinglePost(props) {
   const classes = useStyles();
   const { post } = props;
-  const PF = "http://localhost:5000/images/";
+  const PF = "https://blog-jeet.herokuapp.com/images/";
 
   return (
     <Grid item xs={12} md={6}>

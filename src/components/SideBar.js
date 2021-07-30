@@ -33,7 +33,7 @@ const name = "Name";
 export default function SideBar(props) {
   const classes = useStyles();
   const { sidebar } = props;
-  const PF = "http://localhost:5000/images/";
+  const PF = "https://blog-jeet.herokuapp.com/images/";
 
   return (
     <Grid item xs={12} md={4}>
