@@ -111,12 +111,12 @@ export default function WritePost() {
       data.append("file", file);
       newPost.photo = filename;
       try {
-        await axios.post("/api/upload", data);
+        await axios.post("https://blog-jeet.herokuapp.com/api/upload", data);
       } catch (error) {
         console.log("not uploaded!");
       }
     }
-    const post = await axios.post("/api/post", newPost);
+    const post = await axios.post("https://blog-jeet.herokuapp.com/api/post", newPost);
     window.location.replace(`/post/${post.data._id}`);
   }
 

@@ -38,10 +38,10 @@ export default function Post() {
 
   useEffect(() => {
     const getPost = async () => {
-        const res = await axios.get("/api/post/" + path);
+        const res = await axios.get("https://blog-jeet.herokuapp.com/api/post/" + path);
         setPost(res.data);
 
-        const userData = await axios.get(`/api/auth/${res.data.username}`);
+        const userData = await axios.get(`https://blog-jeet.herokuapp.com/api/auth/${res.data.username}`);
         const user = userData.data.user;
         setSideBar({
           title: 'About',

@@ -64,7 +64,7 @@ export default function UpdateUser() {
 
   useEffect(() => {
     const getUser = async () => {
-        const res = await axios.get(`/api/auth/?userId=${path}`);
+        const res = await axios.get(`https://blog-jeet.herokuapp.com/api/auth/?userId=${path}`);
         setUser(res.data.user);
         setFullName(res.data.user.fullName);
         setAbout(res.data.user.about);
@@ -99,12 +99,12 @@ export default function UpdateUser() {
       data.append("file", file);
       updatedUser.profilePhoto = filename;
       try {
-        await axios.post("/api/upload", data);
+        await axios.post("https://blog-jeet.herokuapp.com/api/upload", data);
       } catch (error) {
         console.log("not uploaded!");
       }
     }
-    await axios.put(`/api/user/${path}`, updatedUser);
+    await axios.put(`https://blog-jeet.herokuapp.com/api/user/${path}`, updatedUser);
     window.location.replace("/");
   }
 
