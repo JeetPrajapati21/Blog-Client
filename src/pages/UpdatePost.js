@@ -134,7 +134,7 @@ export default function UpdatePost() {
       }
     }
     const post = await axios.put(`https://blog-jeet.herokuapp.com/api/post/${path}`, newPost);
-    window.location.replace(`https://blog-jeet.herokuapp.com/post/${post.data._id}`);
+    window.location.replace(`/post/${post.data._id}`);
   }
 
   return (
