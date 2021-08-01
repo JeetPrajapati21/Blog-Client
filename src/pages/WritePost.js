@@ -106,12 +106,12 @@ export default function WritePost() {
     };
     if (file) {
       const data = new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name", filename);
+      const filename = file.name;
+      data.append("filename", filename);
       data.append("file", file);
-      newPost.photo = filename;
       try {
-        await axios.post("https://blog-jeet.herokuapp.com/api/upload", data);
+        const imgUrl = await axios.post("https://blog-jeet.herokuapp.com/file/upload", data);
+        newPost.photo = imgUrl.data;
       } catch (error) {
         console.log("not uploaded!");
       }

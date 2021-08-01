@@ -49,7 +49,7 @@ export default function UpdateUser() {
   const [facebook, setFacebook] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
-  const PF = "https://blog-jeet.herokuapp.com/images/";
+  const PF = "https://blog-jeet.herokuapp.com/file/";
   const [file, setFile] = useState(null);
 
   const [open, setOpen] = useState(false);
@@ -95,11 +95,11 @@ export default function UpdateUser() {
     if (file) {
       const data = new FormData();
       const filename = Date.now() + file.name;
-      data.append("name", filename);
+      data.append("filename", filename);
       data.append("file", file);
-      updatedUser.profilePhoto = filename;
       try {
-        await axios.post("https://blog-jeet.herokuapp.com/api/upload", data);
+        const imgUrl = await axios.post("https://blog-jeet.herokuapp.com/file/upload", data);
+        updatedUser.profilePhoto = imgUrl.data;
       } catch (error) {
         console.log("not uploaded!");
       }
