@@ -110,14 +110,14 @@ export default function WritePost() {
       data.append("filename", filename);
       data.append("file", file);
       try {
-        const imgUrl = await axios.post("/file/upload", data);
+        const imgUrl = await axios.post("https://blog-jeet.herokuapp.com/file/upload", data);
         newPost.photo = imgUrl.data;
       } catch (error) {
         console.log("not uploaded!");
       }
     }
-    const post = await axios.post("/api/post", newPost);
-    window.location.replace(`/post/${post.data._id}`);
+    const post = await axios.post("https://blog-jeet.herokuapp.com/api/post", newPost);
+    window.location.replace(`https://blog-jeet.herokuapp.com/post/${post.data._id}`);
   }
 
   return (
