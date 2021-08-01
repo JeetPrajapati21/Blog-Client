@@ -21,7 +21,7 @@ export default function UserPosts() {
   
     useEffect(() => {
       const getPosts = async () => {
-          const res = await axios.get(`/api/user/?user=${path}`);
+          const res = await axios.get(`https://blog-jeet.herokuapp.com/api/user/?user=${path}`);
           setPosts(res.data);
       }
       getPosts();
