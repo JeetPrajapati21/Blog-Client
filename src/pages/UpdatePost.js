@@ -83,7 +83,7 @@ export default function UpdatePost() {
   const [file, setFile] = useState(null);
   const theme = useTheme();
   const [categoryName, setCategoryName] = React.useState([]);
-  const PF = "https://blog-jeet.herokuapp.com/images/";
+  const PF = "http://localhost:5000/file/";
 
   const [open, setOpen] = useState(false);
 
@@ -97,7 +97,7 @@ export default function UpdatePost() {
 
   useEffect(() => {
     const getPosts = async () => {
-        const res = await axios.get(`https://blog-jeet.herokuapp.com/api/post/${path}`);
+        const res = await axios.get(`/api/post/${path}`);
         setPost(res.data);
         setTitle(res.data.title);
         setContent(res.data.content);
@@ -124,16 +124,16 @@ export default function UpdatePost() {
     if (file) {
       const data = new FormData();
       const filename = Date.now() + file.name;
-      data.append("name", filename);
+      data.append("filename", filename);
       data.append("file", file);
-      newPost.photo = filename;
       try {
-        await axios.post("https://blog-jeet.herokuapp.com/api/upload", data);
+        const imgUrl = await axios.post("/file/upload", data);
+        newPost.photo = imgUrl.data;
       } catch (error) {
         console.log("not uploaded!");
       }
     }
-    const post = await axios.put(`https://blog-jeet.herokuapp.com/api/post/${path}`, newPost);
+    const post = await axios.put(`/api/post/${path}`, newPost);
     window.location.replace(`/post/${post.data._id}`);
   }
 

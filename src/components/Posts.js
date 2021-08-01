@@ -8,7 +8,7 @@ export default function Posts() {
     const [posts, setPosts] = useState([]);
     useEffect(() => {
       const fetchPosts = async () => {
-        const res = await axios.get("https://blog-jeet.herokuapp.com/api/post/");
+        const res = await axios.get("/api/post/");
         setPosts(res.data);
       };
       fetchPosts();

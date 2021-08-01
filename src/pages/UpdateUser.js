@@ -49,7 +49,7 @@ export default function UpdateUser() {
   const [facebook, setFacebook] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
-  const PF = "https://blog-jeet.herokuapp.com/images/";
+  const PF = "http://localhost:5000/file/";
   const [file, setFile] = useState(null);
 
   const [open, setOpen] = useState(false);
@@ -64,7 +64,7 @@ export default function UpdateUser() {
 
   useEffect(() => {
     const getUser = async () => {
-        const res = await axios.get(`https://blog-jeet.herokuapp.com/api/auth/?userId=${path}`);
+        const res = await axios.get(`/api/auth/?userId=${path}`);
         setUser(res.data.user);
         setFullName(res.data.user.fullName);
         setAbout(res.data.user.about);
@@ -95,16 +95,16 @@ export default function UpdateUser() {
     if (file) {
       const data = new FormData();
       const filename = Date.now() + file.name;
-      data.append("name", filename);
+      data.append("filename", filename);
       data.append("file", file);
-      updatedUser.profilePhoto = filename;
       try {
-        await axios.post("https://blog-jeet.herokuapp.com/api/upload", data);
+        const imgUrl = await axios.post("/file/upload", data);
+        updatedUser.profilePhoto = imgUrl.data;
       } catch (error) {
         console.log("not uploaded!");
       }
     }
-    await axios.put(`https://blog-jeet.herokuapp.com/api/user/${path}`, updatedUser);
+    await axios.put(`/api/user/${path}`, updatedUser);
     window.location.replace("/");
   }
 
