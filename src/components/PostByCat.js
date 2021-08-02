@@ -21,7 +21,7 @@ export default function PostByCat() {
   
     useEffect(() => {
       const getPosts = async () => {
-          const res = await axios.get(`/api/user/${path}`);
+          const res = await axios.get(`https://blog-jeet.herokuapp.com/api/user/${path}`);
           setPosts(res.data);
       }
       getPosts();

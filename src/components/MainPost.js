@@ -22,7 +22,7 @@ export default function MainPost(props) {
 
   useEffect(() => {
     const getId = async () => {
-      const res = await axios.get(`/api/auth/${post.username}`);
+      const res = await axios.get(`https://blog-jeet.herokuapp.com/api/auth/${post.username}`);
       const user = res.data.user;
       if (user) {
         setId(user._id);

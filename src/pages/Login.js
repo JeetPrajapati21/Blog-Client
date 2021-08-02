@@ -65,7 +65,7 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("/api/auth/login", {
+    axios.post("https://blog-jeet.herokuapp.com/api/auth/login", {
       email,
       password
     }).then(res => {
