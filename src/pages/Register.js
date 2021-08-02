@@ -64,7 +64,7 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("/api/auth/register", {
+    axios.post("https://blog-jeet.herokuapp.com/api/auth/register", {
       fullName,
       username,
       email,

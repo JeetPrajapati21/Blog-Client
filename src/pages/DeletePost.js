@@ -21,8 +21,8 @@ export default function DeletePost(props) {
   const handleDelete = async () => {
     setOpen(true);
     try {
-        await axios.delete(`/api/post/${post._id}`, {data: {username: post.username}});
-        await axios.delete(`/file/${post.photo}`);
+        await axios.delete(`https://blog-jeet.herokuapp.com/api/post/${post._id}`, {data: {username: post.username}});
+        await axios.delete(`https://blog-jeet.herokuapp.com/file/${post.photo}`);
     } catch (error) {
         
     }
