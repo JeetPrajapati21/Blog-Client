@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,8 +8,10 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
+import { Avatar, CardHeader } from '@material-ui/core';
+import axios from 'axios';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
   },
@@ -19,7 +21,12 @@ const useStyles = makeStyles({
   cardMedia: {
     width: 160,
   },
-});
+  large: {
+    width: theme.spacing(8),
+    height: theme.spacing(8),
+    backgroundColor: '#1976d2'
+  },
+}));
 
 const dateFormat = (inputDate) => {
   let options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -31,21 +38,31 @@ export default function SinglePost(props) {
   const classes = useStyles();
   const { post } = props;
   const PF = "https://blog-jeet.herokuapp.com/file/";
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`https://blog-jeet.herokuapp.com/api/auth/${post.username}`);
+      setUser(res.data.user.profilePhoto);
+    };
+    fetchUser();
+  });
 
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea component="a" href={`/post/${post._id}`} >
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
+            <CardHeader
+              avatar={
+                <Avatar alt={post.username} src={PF + user} className={classes.large}/>
+              }
+              title={post.title.substring(0, 50)}
+              subheader={`${dateFormat(post.createdAt)} by ${post.username}`}
+            />
             <CardContent>
-              <Typography component="h2" variant="h5">
-                {post.title.substring(0, 30)}
-              </Typography>
-              <Typography variant="caption" color="textSecondary">
-                {dateFormat(post.createdAt)} by {post.username}
-              </Typography>
-              <Typography variant="subtitle1" paragraph>
-                {post.content.substring(0, 40)}
+              <Typography variant="subtitle1">
+                {post.content.substring(0, 50)}
               </Typography>
               <Typography variant="subtitle1" color="primary">
                 Continue reading...

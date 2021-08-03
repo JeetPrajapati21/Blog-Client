@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Button, Container, IconButton, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Avatar, Backdrop, Button, CircularProgress, Container, IconButton, TextField, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { useLocation } from 'react-router';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   write: {
@@ -34,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(10),
     height: theme.spacing(10),
   },
+  backdrop: {
+    zIndex: 100,
+    color: '#fff',
+  },
 }));
 
 export default function UpdateUser() {
@@ -53,14 +56,6 @@ export default function UpdateUser() {
   const [file, setFile] = useState(null);
 
   const [open, setOpen] = useState(false);
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   useEffect(() => {
     const getUser = async () => {
@@ -110,6 +105,14 @@ export default function UpdateUser() {
 
   return (
     <Container maxWidth="md" >
+      {
+        open
+        ?
+        <Backdrop className={classes.backdrop} open={open}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        :
+        <>
       <Typography variant="h5" align="center" className={classes.heading} >
           Update Profile
       </Typography>
@@ -195,23 +198,8 @@ export default function UpdateUser() {
         />
         <Button variant="contained" onClick={handleSubmit} >Update</Button>
       </form>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={open}
-        autoHideDuration={2000}
-        onClose={handleClose}
-        message="User has been updated!"
-        action={
-          <React.Fragment>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
+        </>
         }
-      />
     </Container>
   );
 }
