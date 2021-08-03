@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Checkbox, Container, FormControl, IconButton, Input, InputLabel, ListItemText, MenuItem, Select, Snackbar, TextField, Typography, useTheme } from '@material-ui/core';
+import { Backdrop, Button, Checkbox, CircularProgress, Container, FormControl, IconButton, Input, InputLabel, ListItemText, MenuItem, Select, TextField, Typography, useTheme } from '@material-ui/core';
 import axios from 'axios';
 import { useLocation } from 'react-router';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   write: {
@@ -35,7 +34,11 @@ const useStyles = makeStyles((theme) => ({
   addImage: {
     display: 'none',
     marginBottom: theme.spacing(1),
-  }
+  },
+  backdrop: {
+    zIndex: 100,
+    color: '#fff',
+  },
 }));
 
 const ITEM_HEIGHT = 48;
@@ -87,14 +90,6 @@ export default function UpdatePost() {
 
   const [open, setOpen] = useState(false);
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-
   useEffect(() => {
     const getPosts = async () => {
         const res = await axios.get(`https://blog-jeet.herokuapp.com/api/post/${path}`);
@@ -139,6 +134,14 @@ export default function UpdatePost() {
 
   return (
     <Container maxWidth="md" >
+      {
+        open
+        ?
+        <Backdrop className={classes.backdrop} open={open}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        :
+        <>
       <Typography variant="h5" align="center" className={classes.heading} >
           Update Post
       </Typography>
@@ -210,23 +213,8 @@ export default function UpdatePost() {
         />
         <Button variant="contained" onClick={handleSubmit} >Update</Button>
       </form>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={open}
-        autoHideDuration={2000}
-        onClose={handleClose}
-        message="Post has been updated!"
-        action={
-          <React.Fragment>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
+        </>
         }
-      />
     </Container>
   );
 }

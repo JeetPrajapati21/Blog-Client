@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Checkbox, Container, FormControl, IconButton, Input, InputLabel, ListItemText, MenuItem, Select, Snackbar, TextField, Typography, useTheme } from '@material-ui/core';
+import { Backdrop, Button, Checkbox, CircularProgress, Container, FormControl, IconButton, Input, InputLabel, ListItemText, MenuItem, Select, TextField, Typography, useTheme } from '@material-ui/core';
 import axios from 'axios';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   write: {
@@ -34,7 +33,11 @@ const useStyles = makeStyles((theme) => ({
   addImage: {
     display: 'none',
     marginBottom: theme.spacing(1),
-  }
+  },
+  backdrop: {
+    zIndex: 100,
+    color: '#fff',
+  },
 }));
 
 const ITEM_HEIGHT = 48;
@@ -81,14 +84,6 @@ export default function WritePost() {
 
   const [open, setOpen] = useState(false);
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-
   const handleChange = (event) => {
     setCategoryName(event.target.value);
   };
@@ -122,6 +117,14 @@ export default function WritePost() {
 
   return (
     <Container maxWidth="md" >
+      {
+        open
+        ?
+        <Backdrop className={classes.backdrop} open={open}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        :
+        <>
       <Typography variant="h5" align="center" className={classes.heading} >
         Write Post
       </Typography>
@@ -191,23 +194,8 @@ export default function WritePost() {
         />
         <Button variant="contained" onClick={handleSubmit} >Post</Button>
       </form>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={open}
-        autoHideDuration={2000}
-        onClose={handleClose}
-        message="Post has been created!"
-        action={
-          <React.Fragment>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
+        </>
         }
-      />
     </Container>
   );
 }
