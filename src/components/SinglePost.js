@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(8),
     height: theme.spacing(8),
-    backgroundColor: '#1976d2'
   },
 }));
 
@@ -55,7 +54,7 @@ export default function SinglePost(props) {
           <div className={classes.cardDetails}>
             <CardHeader
               avatar={
-                <Avatar alt={post.username} src={PF + user} className={classes.large}/>
+                <Avatar alt="A" src={PF + user} className={classes.large}/>
               }
               title={post.title.substring(0, 50)}
               subheader={`${dateFormat(post.createdAt)} by ${post.username}`}
