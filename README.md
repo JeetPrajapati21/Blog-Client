@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+Live: [https://blog-jeet.netlify.app/](https://blog-jeet.netlify.app/).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
