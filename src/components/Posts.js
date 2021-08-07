@@ -26,8 +26,8 @@ export default function Posts() {
                 ?
                 <Grid container spacing={4}>
                    { 
-                    [...Array(4)].map(() => {
-                            return <HomeSkeleton />
+                    [...Array(4)].map((value, index) => {
+                            return <HomeSkeleton key={index} />
                         })
                     }
                 </Grid>
