@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -7,9 +7,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { Fab, useScrollTrigger, Zoom } from '@material-ui/core';
+import { Avatar, Fab, Menu, MenuItem, useScrollTrigger, Zoom } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { AuthContext } from '../context/auth-context';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,6 +84,17 @@ ScrollTop.propTypes = {
 
 export default function Header(props) {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const PF = "https://blog-jeet.herokuapp.com/file/";
+  const [user, setUser] = useState("");
+
+  const handleOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const auth = useContext(AuthContext);
 
@@ -92,6 +104,17 @@ export default function Header(props) {
     auth.logout();
     storedData = JSON.parse(localStorage.getItem('blogUser'));
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (storedData) {
+        const res = await axios.get(`https://blog-jeet.herokuapp.com/api/user/singleUser/${storedData.userId}`);
+        setUser(res.data);
+      }
+    };
+    fetchUser();
+  });
+
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar} id="back-to-top-anchor" >
@@ -104,9 +127,6 @@ export default function Header(props) {
         >
           Blog
         </Typography>
-        {/* <IconButton>
-          <SearchIcon />
-        </IconButton> */}
         <Button size="small" href="/">Home</Button>
         {
           storedData 
@@ -114,16 +134,32 @@ export default function Header(props) {
           <Button size="small" href="/write" >Write</Button>
         }
         {
-          storedData 
-          &&
-          <Button size="small" href={`/user/edit/${storedData.userId}`} >Settings</Button>
-        }
-        {
-          storedData 
+          storedData
           ?
-          <Button size="small" href="/" onClick={handleClick} >Logout</Button>
+          <>
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleOpen}>
+              <Avatar src={PF + user} className={classes.large}/>
+            </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem>
+                <Button size="small" href={`/user/edit/${storedData.userId}`} >Profile</Button>
+              </MenuItem>
+              <MenuItem>
+                <Button size="small" href="/" onClick={handleClick} >Logout</Button>
+              </MenuItem>
+            </Menu>
+          </>
           :
-          <Button size="small" href="/login" >Login</Button>
+          <>
+            <Button size="small" href="/login" >Login</Button>
+            <Button size="small" href="/register" >Register</Button>
+          </>
         }
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
